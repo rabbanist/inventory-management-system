@@ -6,8 +6,8 @@
                 <p class="lead text-muted mb-4">Discover streamlined transactions, real-time inventory management, and
                     actionable insights in one intuitive POS app.</p>
                 <div class="d-flex flex-wrap"><a class="btn bg-gradient-primary me-2 mb-2 mb-sm-0"
-                        href="{{ url('/userLogin') }}">Start Sale</a>
-                    <a class="btn bg-gradient-primary mb-2 mb-sm-0" href="{{ url('/userLogin') }}">Login</a>
+                        href="{{ route('user.login') }}">Start Sale</a>
+                    <a class="btn bg-gradient-primary mb-2 mb-sm-0" href="{{ route('user.login') }}">Login</a>
                 </div>
             </div>
             <div class="col-12 col-lg-6 offset-lg-1">

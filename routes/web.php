@@ -8,16 +8,19 @@ use App\Http\Controllers\Admin\DashboardController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
-// Auth routes 
-Route::get('/login', [HomeController::class, 'login'])->name('login');
+// Auth routes
+Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+    Route::get('/login', [HomeController::class, 'login'])->name('login');
 
-Route::get('/registration', [HomeController::class, 'registration'])->name('registration');
+    Route::get('/registration', [HomeController::class, 'registration'])->name('registration');
 
-Route::get('/forgot-password', [HomeController::class, 'forgotPassword'])->name('forgot-password');
+    Route::get('/forgot-password', [HomeController::class, 'forgotPassword'])->name('forgot-password');
 
-Route::get('/send-otp', [HomeController::class, 'sendOtp'])->name('send-otp');
+    Route::get('/send-otp', [HomeController::class, 'sendOtp'])->name('send-otp');
 
-Route::get('/reset-password', [HomeController::class, 'resetPassword'])->name('reset-password');
+    Route::get('/reset-password', [HomeController::class, 'resetPassword'])->name('reset-password');
+
+});
 
 
 // Admin Dashboard route
