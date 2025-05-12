@@ -13,6 +13,7 @@ class HomeController extends Controller
     }
 
 
+
     // Auth page return views 
     public function login(): View
     {
@@ -40,4 +41,5 @@ class HomeController extends Controller
     {
         return view('pages.auth.reset-password');
     }
+
 }
