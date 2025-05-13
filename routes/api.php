@@ -12,3 +12,8 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/user-registration', [AuthController::class, 'userRegistration'])->name('user.registration');
 Route::post('/user-login', [AuthController::class,'userLogin'])->name('user.login');
+Route::post('/send-otp', [AuthController::class, 'sendOtp'])->name('send.otp');
+Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])->name('verify.otp');
+
+Route::post('/set-password', [AuthController::class, 'setPassword'])->name('set.password')->middleware('authenticated');
+
