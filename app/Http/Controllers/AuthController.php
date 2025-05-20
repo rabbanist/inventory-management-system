@@ -39,31 +39,23 @@ class AuthController extends Controller
      * @return JsonResponse
      */
 
-    public function userLogin(LoginRequest $request): JsonResponse
+    public function userLogin(Request $request)
     {
-        try {
-            $validated = $request->validated();
-            $user = User::where('email', $validated['email'])->first();
+        $user = User::where('email', $request->email)->first();
 
-            if ($user && Hash::check($validated['password'], $user->password)) {
-
-                $token = JWTToken::createToken($validated['email'], $user->id);
-                return response()->json([
-                    'status' => 'success',
-                    'message' => 'User logged in successfully',
-                ], 200)->cookie('Token', $token . time() + 60 * 24 * 30);
-            } else {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Invalid email or password',
-                ], 401);
-            }
-        } catch (Exception $e) {
+        if ($user && Hash::check($request->password, $user->password)) {
+            // Password matched - create token
+            $token = JWTToken::createToken($user->email, $user->id);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User Login successful'
+            ], 200)->cookie('token', $token, 60 * 24 * 30); // expires in 30 day (in minutes)
+        } else {
             return response()->json([
                 'status' => 'error',
-                'message' => 'User login failed',
-                'error' => $e->getMessage(),
-            ], 500);
+                'message' => 'User Login failed',
+                'error' => 'Invalid email or password.'
+            ], 401);
         }
     }
 
@@ -175,6 +167,15 @@ class AuthController extends Controller
                 'message' => 'Unable to reset password'
             ]);
         }
+    }
+
+
+    public function logout()
+    {
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User Logout successful'
+        ])->cookie('token', null, -1);
     }
 
 }

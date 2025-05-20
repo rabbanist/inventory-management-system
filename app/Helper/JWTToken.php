@@ -43,14 +43,19 @@ class JWTToken
      * @param string $token
      * @return array|bool
      */
-    public static function verifyToken($token): string
+    public static function verifyToken($token)
     {
         try {
-            $key = env('JWT_SECRET_KEY');
-            $decoded = JWT::decode($token, new Key($key, 'HS256'));
-            return $decoded->userEmail;
-        } catch (Exception $e) {
-            return 'unauthorized';
+            if (!$token) {
+                return "unauthorized";
+            } else {
+                $key = env('JWT_SECRET_KEY');
+                $payload = JWT::decode($token, new Key($key, 'HS256'));
+                return $payload;
+                // return JWT::decode($token, new Key($key, 'HS256'));
+            }
+        } catch (\Throwable $e) {
+            return "unauthorized";
         }
     }
 }
